@@ -12,7 +12,7 @@ The following is a list of workflow examples. As time permits, more examples wil
 
 ## Setup
 
-In order to run the samples there is a small amount of setup to your environment.In this first step(s) with workflow-chain, we setup a simple workflow that does the following :
+In order to run the samples there is a small amount of setup to your environment. In this first step(s) with workflow-chain, we setup a simple workflow that does the following :
 
 Start by running the following command from a terminal within the IDE. This will setup ts-node as an executable on the terminal. We use ts-node, as it appears to operate the best no matter what OS (Windows, MacOS, Linux, other) is being used.
 

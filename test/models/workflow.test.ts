@@ -115,7 +115,7 @@ describe('Task Objects', () => {
     });
   });
   test('setWorkflowContext should set the workflow context', async () => {
-    let wfContext: IWorkflowContext = {
+    const wfContext: IWorkflowContext = {
       task001: {
         contextKey: 'wfTask001',
         contextValue: { eleOne: 'elementOne' },
@@ -156,7 +156,7 @@ describe('Task Objects', () => {
     });
   });
   test('setWorkflowContext should set/override the current workflow context', async () => {
-    let wfContext: IWorkflowContext = {
+    const wfContext: IWorkflowContext = {
       wfTask001: {
         contextKey: 'wfTask001',
         contextValue: { eleOne: 'elementOne' },

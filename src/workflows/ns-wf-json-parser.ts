@@ -7,7 +7,7 @@ import {
 } from 'workflow-chain';
 
 /**
- * A sample workflow namespace.  While export of a namespce is
+ * A sample workflow namespace.  While export of a namespace is
  * considered bad practice, it's the only way to provide a
  * scope within the TWorkflow class to dynamically create the
  * task classses.

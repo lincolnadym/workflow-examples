@@ -3,8 +3,6 @@ import {
   ITaskDefinition,
   IWorkflowDefinition,
   TWorkflowTask,
-  Logger,
-  LogLevel,
 } from 'workflow-chain';
 
 /**
@@ -18,12 +16,12 @@ import {
  * - WotkflowTask classes.  This simplifies the dynamic creation of
  * task classes.
  */
-export namespace NSWFJSONParser {
-  const log: Logger = new Logger(LogLevel.Info);
-  export const sampleWorkflow: IWorkflowDefinition = {
+export namespace NSWFCensusData {
+  export const wfdCensusData: IWorkflowDefinition = {
     workflowAttributes: {
-      workflowName: 'sample-workflow',
-      workflowDescription: 'Implements a sample workflow',
+      workflowName: 'census-data',
+      workflowDescription:
+        'Implements a sample workflow that processes Census data from an endpoint',
       workflowContext: {
         payload: {
           contextKey: 'data',
@@ -31,38 +29,35 @@ export namespace NSWFJSONParser {
           statusCode: '0',
         },
       },
-      workflowNamespace: 'SampleWorkflow',
-      workflowStart: 'WorkflowTask001',
+      workflowNamespace: 'NSWFCensusData',
+      workflowStart: 'WFTQueryEndpoint',
     },
     workflowTasks: [
       {
         taskSequence: 1,
-        taskId: 'workflow-001',
-        taskName: 'step-001',
-        taskClass: 'WorkflowTask001',
-        nextTasks: ['WorkflowTask002'],
+        taskId: 'wft-001',
+        taskName: 'wft-endpoint',
+        taskClass: 'WFTQueryEndpoint',
+        nextTasks: ['WFTJsonConvert'],
         taskActive: true,
       },
       {
-        taskId: 'workflow-002',
-        taskName: 'step-001',
-        taskClass: 'WorkflowTask002',
+        taskId: 'wft-002',
+        taskName: 'wft-json-convert',
+        taskClass: 'WFTJsonConvert',
         nextTasks: [],
         taskActive: true,
       },
     ],
   };
 
-  export class WorkflowTask001 extends TWorkflowTask {
+  export class WFTQueryEndpoint extends TWorkflowTask {
     constructor(taskDefinition: ITaskDefinition) {
       super(taskDefinition);
       this.taskDefinition.taskName = this.constructor.name;
     }
-    // doPreTask(): void {
-    //   Log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPreTask() -`);
-    // }
     doRunTask(): IContextItem {
-      log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`);
+      this.log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`);
       return {
         contextKey: `${this.taskDefinition.taskName}:doRunTask`,
         contextValue: {},
@@ -70,7 +65,9 @@ export namespace NSWFJSONParser {
       };
     }
     doPostTask(): IContextItem {
-      log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`);
+      this.log.info(
+        `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`,
+      );
       return {
         contextKey: `${this.taskDefinition.taskName}:doPostTask`,
         contextValue: {},
@@ -79,7 +76,7 @@ export namespace NSWFJSONParser {
     }
   }
 
-  export class WorkflowTask002 extends TWorkflowTask {
+  export class WFTJsonConvert extends TWorkflowTask {
     constructor(taskDefinition: ITaskDefinition) {
       super(taskDefinition);
       this.taskDefinition.taskName = this.constructor.name;
@@ -88,7 +85,7 @@ export namespace NSWFJSONParser {
     //   Log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPreTask() -`);
     // }
     doRunTask(): IContextItem {
-      log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`);
+      this.log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`);
       return {
         contextKey: `${this.taskDefinition.taskName}:doPostTask`,
         contextValue: {},
@@ -96,7 +93,9 @@ export namespace NSWFJSONParser {
       };
     }
     doPostTask(): IContextItem {
-      log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`);
+      this.log.info(
+        `- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doPostTask() -`,
+      );
       return {
         contextKey: `${this.taskDefinition.taskName}:doPostTask`,
         contextValue: {},

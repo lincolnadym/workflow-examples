@@ -1,11 +1,12 @@
 import { WFJSONParser, NSWFJSONParser } from '../../src/workflows';
 import { mockWFDefinition } from '../__mock__/common';
-import { IWorkflowContext, TWorkflowTask, Logger as Log } from 'workflow-chain';
+import { IWorkflowContext, TWorkflowTask, Logger, LogLevel } from 'workflow-chain';
 
 const testDefinitions = mockWFDefinition;
 
 describe('Task Objects', () => {
   let theWorkflow: WFJSONParser;
+  const log: Logger = new Logger(LogLevel.Info);
   beforeEach(() => {
     theWorkflow = new WFJSONParser(NSWFJSONParser.sampleWorkflow);
   });
@@ -16,7 +17,7 @@ describe('Task Objects', () => {
 
   test('should allocate the workflow with definition correctly', async () => {
     expect(theWorkflow.getWorkflowAttributes()).toMatchObject({
-      workflowName: 'WorkflowSample',
+      workflowName: 'WFJSONParser',
       workflowDescription: 'Implements a sample workflow',
       workflowContext: {
         payload: {
@@ -46,24 +47,19 @@ describe('Task Objects', () => {
 
     expect(theWorkflow).toBeDefined();
     Object.keys(theWorkflow.getTaskDictionary()).forEach((key, task) => {
-      expect(
-        theWorkflow.getTaskDictionary()[key] instanceof TWorkflowTask,
-      ).toBe(true);
-      Log.info(
-        `Task Key [${key}] Dictionary [${theWorkflow.getTaskDictionary()[key]}`,
-      ); // All fine!
+      expect(theWorkflow.getTaskDictionary()[key] instanceof TWorkflowTask).toBe(true);
+      log.info(`Task Key [${key}] Dictionary [${theWorkflow.getTaskDictionary()[key]}`); // All fine!
       // if (theWorkflow.isKey(theWorkflow.getTaskDictionary()[key], key)) {
       // }
     });
   });
   test('should allocate a workflow with a task instance with a task definition', async () => {
-    Log.info('- theWorkflow.getTaskDictionary -');
-    Log.info(theWorkflow.getTaskDictionary()['WorkflowTask001']);
+    log.info('- theWorkflow.getTaskDictionary -');
+    log.info(theWorkflow.getTaskDictionary()['WorkflowTask001']);
     expect(theWorkflow.getTaskDictionary()).toBeDefined();
-    expect(
-      theWorkflow.getTaskDictionary()['WorkflowTask001'] instanceof
-        TWorkflowTask,
-    ).toBe(true);
+    expect(theWorkflow.getTaskDictionary()['WorkflowTask001'] instanceof TWorkflowTask).toBe(
+      true,
+    );
     expect(theWorkflow.getTaskDictionary()['WorkflowTask001']).toMatchObject({
       taskDefinition: {
         taskSequence: 1,
@@ -137,8 +133,8 @@ describe('Task Objects', () => {
     expect(theWorkflow.getWorkflowContext()).toMatchObject({});
     theWorkflow.doPreWorkflow();
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPreWorkflow': {
-        contextKey: 'WorkflowSample:doPreWorkflow',
+      'WFJSONParser:doPreWorkflow': {
+        contextKey: 'WFJSONParser:doPreWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },
@@ -148,8 +144,8 @@ describe('Task Objects', () => {
     expect(theWorkflow.getWorkflowContext()).toMatchObject({});
     theWorkflow.doPostWorkflow();
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPostWorkflow': {
-        contextKey: 'WorkflowSample:doPostWorkflow',
+      'WFJSONParser:doPostWorkflow': {
+        contextKey: 'WFJSONParser:doPostWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },
@@ -167,8 +163,8 @@ describe('Task Objects', () => {
     expect(theWorkflow.getWorkflowContext()).toMatchObject({});
     theWorkflow.doPreWorkflow();
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPreWorkflow': {
-        contextKey: 'WorkflowSample:doPreWorkflow',
+      'WFJSONParser:doPreWorkflow': {
+        contextKey: 'WFJSONParser:doPreWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },
@@ -186,16 +182,14 @@ describe('Task Objects', () => {
     expect(theWorkflow.getWorkflowContext()).toMatchObject({});
     theWorkflow.doPreWorkflow();
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPreWorkflow': {
-        contextKey: 'WorkflowSample:doPreWorkflow',
+      'WFJSONParser:doPreWorkflow': {
+        contextKey: 'WFJSONParser:doPreWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },
     });
-    expect(
-      theWorkflow.getContextItem('WorkflowSample:doPreWorkflow'),
-    ).toMatchObject({
-      contextKey: 'WorkflowSample:doPreWorkflow',
+    expect(theWorkflow.getContextItem('WFJSONParser:doPreWorkflow')).toMatchObject({
+      contextKey: 'WFJSONParser:doPreWorkflow',
       contextValue: {},
       statusCode: 'SUCCESS',
     });
@@ -204,20 +198,20 @@ describe('Task Objects', () => {
     expect(theWorkflow.getWorkflowContext()).toMatchObject({});
     theWorkflow.doPreWorkflow();
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPreWorkflow': {
-        contextKey: 'WorkflowSample:doPreWorkflow',
+      'WFJSONParser:doPreWorkflow': {
+        contextKey: 'WFJSONParser:doPreWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },
     });
-    Log.info('- theWorkflow.doRunWorkflow - Context - Before -');
-    Log.info(theWorkflow.getWorkflowContext());
+    log.info('- theWorkflow.doRunWorkflow - Context - Before -');
+    log.info(theWorkflow.getWorkflowContext());
     theWorkflow.doRunWorkflow();
-    Log.info('- theWorkflow.doRunWorkflow - Context - After -');
-    Log.info(theWorkflow.getWorkflowContext());
+    log.info('- theWorkflow.doRunWorkflow - Context - After -');
+    log.info(theWorkflow.getWorkflowContext());
     expect(theWorkflow.getWorkflowContext()).toMatchObject({
-      'WorkflowSample:doPreWorkflow': {
-        contextKey: 'WorkflowSample:doPreWorkflow',
+      'WFJSONParser:doPreWorkflow': {
+        contextKey: 'WFJSONParser:doPreWorkflow',
         contextValue: {},
         statusCode: 'SUCCESS',
       },

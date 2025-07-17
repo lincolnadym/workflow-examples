@@ -90,7 +90,7 @@ export namespace NSWFJSONParser {
     doRunTask(): IContextItem {
       log.info(`- WorkflowTaskOne - Task ${this.taskDefinition.taskName} - doRunTask() -`);
       return {
-        contextKey: `${this.taskDefinition.taskName}:doPostTask`,
+        contextKey: `${this.taskDefinition.taskName}:doRunTask`,
         contextValue: {},
         statusCode: 'SUCCESS',
       };

@@ -3,7 +3,8 @@ import { NSWFJSONParser } from './workflows';
 
 function runWorkflow() {
   const wfParser = new WFJSONParser(NSWFJSONParser.sampleWorkflow);
-  return wfParser.doRunWorkflow();
+  wfParser.doRunWorkflow();
+  return wfParser.getWorkflowContext();
 }
 const result = runWorkflow();
 console.log('Result', result);
